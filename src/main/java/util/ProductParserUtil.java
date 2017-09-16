@@ -15,6 +15,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Base64;
 import java.util.List;
 
 public class ProductParserUtil
@@ -72,6 +73,8 @@ public class ProductParserUtil
                         inet_price = price;
                     }
                     image = downloadImFromURL(new URL(product.getElementsByTagName("image").item(0).getChildNodes().item(0).getNodeValue()));
+                    byte[] encodeBase64 = Base64.getEncoder().encode(image);
+                    String base64Encoded = new String(encodeBase64, "UTF-8");
                     title = product.getElementsByTagName("title").item(0).getChildNodes().item(0).getNodeValue();
                     description = product.getElementsByTagName("description").item(0).getChildNodes().item(0).getNodeValue();
                     rating = Double.parseDouble(product.getElementsByTagName("rating").item(0).getChildNodes().item(0).getNodeValue());
@@ -83,8 +86,10 @@ public class ProductParserUtil
                     productObj.setInetPrice(inet_price);
                     productObj.setRating(rating);
                     productObj.setImage(image);
+                    productObj.setBase64ImageFile(base64Encoded);
 
                     allProducts.add(productObj);
+
                 }
                 catch (NullPointerException ex)
                 {

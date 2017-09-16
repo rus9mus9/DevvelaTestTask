@@ -1,7 +1,12 @@
 package model;
 
+import com.fasterxml.jackson.annotation.JsonAutoDetect;
+
 import javax.persistence.*;
 import java.util.Arrays;
+
+import static com.fasterxml.jackson.annotation.JsonAutoDetect.Visibility.ANY;
+import static com.fasterxml.jackson.annotation.JsonAutoDetect.Visibility.NONE;
 
 @NamedQueries({
         @NamedQuery(name = Product.DELETE, query = "DELETE FROM Product p WHERE p.productId=:id"),
@@ -11,7 +16,7 @@ import java.util.Arrays;
 
 @Entity
 @Table(name = "products")
-
+@JsonAutoDetect(fieldVisibility = ANY, getterVisibility = NONE, isGetterVisibility = NONE, setterVisibility = NONE)
 public class Product
 {
    public static final String DELETE = "Meal.delete";
@@ -43,6 +48,34 @@ public class Product
    @Column(name = "views")
    private int views;
 
+   @Column(name = "base64Encoded")
+   private String base64ImageFile;
+
+   public Product()
+   {
+
+   }
+    public Product(Integer productId, String title, String description, int price, int inetPrice, double rating, byte[] image)
+    {
+        this.productId = productId;
+        this.title = title;
+        this.description = description;
+        this.price = price;
+        this.inetPrice = inetPrice;
+        this.rating = rating;
+        this.image = image;
+    }
+
+    public String getBase64ImageFile()
+    {
+        return base64ImageFile;
+    }
+
+    public void setBase64ImageFile(String base64ImageFile)
+    {
+        this.base64ImageFile = base64ImageFile;
+    }
+
     public int getViews()
     {
         return views;
@@ -67,6 +100,7 @@ public class Product
     {
         this.rating = rating;
     }
+
     public void setProductId(Integer productId)
     {
         this.productId = productId;
@@ -122,6 +156,7 @@ public class Product
         this.image = image;
     }
 
+    public boolean isNew() {return this.productId == null;}
 
     @Override
     public String toString()
