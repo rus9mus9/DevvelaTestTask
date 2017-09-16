@@ -1,5 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <html>
 <jsp:include page="fragments/headTag.jsp"/>
 <body>
@@ -36,11 +37,12 @@
                             <td>${product.productId}</td>
                             <td>${product.title}</td>
                             <td>${product.description}</td>
-                            <td>${product.price}</td>
-                            <td>${product.rating}</td>
-                            <td><img alt="img" src="data:image/jpeg;base64,${product.base64ImageFile}"/></td>
+                            <td><fmt:formatNumber type="number" maxFractionDigits="0" value = "${product.price}"/></td>
+                            <td><fmt:formatNumber type="number" minFractionDigits="1" maxFractionDigits="1" value = "${product.rating}"/></td>
+                            <td><img src="${product.imageURL}"></td>
+                            <%--<td><img alt="img" src="data:image/jpeg;base64,${product.base64ImageFile}"/></td>--%>
                             <td><a><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></a></td>
-                            <td><a class = "delete" onclick="deleteRow(${product.productId})"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a></td>
+                            <td><a onclick="deleteRow(${product.productId})"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a></td>
                         </tr>
                         </c:forEach>
                     </table>

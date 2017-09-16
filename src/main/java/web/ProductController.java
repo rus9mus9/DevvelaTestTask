@@ -66,7 +66,7 @@ public class ProductController
     }
 
    /* @PostMapping("/products")*/
-    public String updateOrCreate(HttpServletRequest request) {
+   /* public String updateOrCreate(HttpServletRequest request) {
         Product product = new Product(getId(request), request.getParameter("title"),
                 request.getParameter("description"),
                 Integer.valueOf(request.getParameter("price")),
@@ -80,7 +80,7 @@ public class ProductController
             service.update(product);
         }
         return "redirect:/products";
-    }
+    }*/
 
     private int getId(HttpServletRequest request)
     {

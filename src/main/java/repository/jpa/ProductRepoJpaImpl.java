@@ -21,6 +21,10 @@ public class ProductRepoJpaImpl implements ProductRepo
     @Override
     public Product insert(Product product)
     {
+        if(product.getDescription().isEmpty() || product.getDescription().equals("\n"))
+        {
+            product.setDescription("Описание товара отсутствует.");
+        }
         em.persist(product);
         return product;
     }

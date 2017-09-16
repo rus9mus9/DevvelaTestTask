@@ -28,6 +28,12 @@ public class ProductParserUtil
     public static List<Product> parseFromXmlToProductList(File file) throws ParserConfigurationException, IOException, SAXException
     {
         DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+        factory.setValidating(false);
+        factory.setNamespaceAware(true);
+        factory.setFeature("http://xml.org/sax/features/namespaces", false);
+        factory.setFeature("http://xml.org/sax/features/validation", false);
+        factory.setFeature("http://apache.org/xml/features/nonvalidating/load-dtd-grammar", false);
+        factory.setFeature("http://apache.org/xml/features/nonvalidating/load-external-dtd", false);
         DocumentBuilder builder = factory.newDocumentBuilder();
         Document document = builder.parse(file);
         NodeList productList = document.getElementsByTagName("product");
@@ -47,7 +53,7 @@ public class ProductParserUtil
                 double rating;
                 int inet_price;
                 int price;
-                byte[] image;
+                URL imageURL;
 
                 try
                 {
@@ -72,9 +78,7 @@ public class ProductParserUtil
                     {
                         inet_price = price;
                     }
-                    image = downloadImFromURL(new URL(product.getElementsByTagName("image").item(0).getChildNodes().item(0).getNodeValue()));
-                    byte[] encodeBase64 = Base64.getEncoder().encode(image);
-                    String base64Encoded = new String(encodeBase64, "UTF-8");
+                    imageURL = new URL(product.getElementsByTagName("image").item(0).getChildNodes().item(0).getNodeValue());
                     title = product.getElementsByTagName("title").item(0).getChildNodes().item(0).getNodeValue();
                     description = product.getElementsByTagName("description").item(0).getChildNodes().item(0).getNodeValue();
                     rating = Double.parseDouble(product.getElementsByTagName("rating").item(0).getChildNodes().item(0).getNodeValue());
@@ -85,9 +89,7 @@ public class ProductParserUtil
                     productObj.setPrice(price);
                     productObj.setInetPrice(inet_price);
                     productObj.setRating(rating);
-                    productObj.setImage(image);
-                    productObj.setBase64ImageFile(base64Encoded);
-
+                    productObj.setImageURL(imageURL);
                     allProducts.add(productObj);
 
                 }
@@ -100,7 +102,7 @@ public class ProductParserUtil
      return allProducts;
     }
 
-    public static byte[] downloadImFromURL(URL toDownload)
+    /*public static byte[] downloadImFromURL(URL toDownload)
     {
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
         try
@@ -120,5 +122,5 @@ public class ProductParserUtil
             e.printStackTrace();
             return null;
         }
-    }
+    }*/
 }

@@ -3,6 +3,7 @@ package model;
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 
 import javax.persistence.*;
+import java.net.URL;
 import java.util.Arrays;
 
 import static com.fasterxml.jackson.annotation.JsonAutoDetect.Visibility.ANY;
@@ -45,17 +46,31 @@ public class Product
    @Column(name = "image")
    private byte[] image;
 
+   @Column(name = "base64Encoded")
+   private String base64ImageFile;
+
+   @Column(name = "imageurl")
+   private URL imageURL;
+
    @Column(name = "views")
    private int views;
 
-   @Column(name = "base64Encoded")
-   private String base64ImageFile;
+    public URL getImageURL()
+    {
+        return imageURL;
+    }
+
+    public void setImageURL(URL imageURL)
+    {
+        this.imageURL = imageURL;
+    }
+
 
    public Product()
    {
 
    }
-    public Product(Integer productId, String title, String description, int price, int inetPrice, double rating, byte[] image)
+    public Product(Integer productId, String title, String description, int price, int inetPrice, double rating, URL imageURL, byte[] image)
     {
         this.productId = productId;
         this.title = title;
@@ -63,6 +78,7 @@ public class Product
         this.price = price;
         this.inetPrice = inetPrice;
         this.rating = rating;
+        this.imageURL = imageURL;
         this.image = image;
     }
 

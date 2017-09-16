@@ -4,11 +4,12 @@ CREATE TABLE products
 (
   id INTEGER NOT NULL,
   title VARCHAR NOT NULL,
-  description VARCHAR NOT NULL,
+  description  VARCHAR,
   price INTEGER NOT NULL,
   rating REAL NOT NULL,
   inetPrice INTEGER,
+  imageURL VARCHAR,
   image BYTEA,
-  base64Encoded VARCHAR NOT NULL,
+  base64Encoded VARCHAR,
   views INTEGER
 );
