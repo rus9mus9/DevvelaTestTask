@@ -75,8 +75,8 @@ public class ProductRepoJdbcImpl implements ProductRepo
     public Product insert(Product product)
     {
         jdbcTemplate.update("INSERT INTO products (id, title, description, price, rating, inetprice, image, views) VALUES (?, ?, ?, ?, ?, ?, ?, ?)",
-                product.getProductId(), product.getTitle(), product.getDescription(), product.getPrice(), product.getRating(), product.getInetPrice(),
-                product.getImage(), 0);
+                product.getProductId(), product.getTitle(), product.getDescription(), product.getPrice(), product.getRating(), product.getInetPrice()
+                /*product.getImage()*/, 0);
         return product;
     }
 

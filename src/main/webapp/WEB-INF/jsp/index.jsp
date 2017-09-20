@@ -7,8 +7,13 @@
 
 <section>
     <h3>AAAAAAAA</h3>
-<form method="post" action="products">
+<form method="post" action="products" enctype="multipart/form-data">
+    Select a file from the computer <input type="file" name="file">
+    <br>
+    Or load from URL<input type="url" name="urlFile">
+    <br>
 <button type="submit">Парсануть!</button>
+
 </form>
 </section>
 </body>

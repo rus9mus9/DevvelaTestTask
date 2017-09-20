@@ -1,9 +1,13 @@
 var ajaxUrl = "ajax/products/";
 var datatableApi;
 
+function updateTable() {
+    $.get(ajaxUrl, updateTableByData);
+}
+
 // $(document).ready(function () {
 $(function () {
-    datatableApi = $("#datatable").DataTable({
+    datatableApi = $("#productTable").DataTable({
         "paging": true,
         "info": true,
         "columns": [
@@ -23,7 +27,8 @@ $(function () {
                 "data": "rating"
             },
             {
-                "data": "image"
+                "data": "imageURL",
+                "orderable": false
             },
             {
                 "defaultContent": "Edit",

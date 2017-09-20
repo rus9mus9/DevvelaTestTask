@@ -1,24 +1,24 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+
 <html>
 <jsp:include page="fragments/headTag.jsp"/>
 <body>
 <script type="text/javascript" src="resources/js/dataTablesUtil.js" defer></script>
 <script type="text/javascript" src="resources/js/productDataTables.js" defer></script>
+
 <jsp:include page="fragments/bodyHeader.jsp"/>
+
     <div class="jumbotron">
         <div class="container">
-            <div class="shadow">
                 <br>
                 <a class="btn btn-primary" onclick="add()">
                     <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
-                    Add
-                </a><h3>Products</h3>
+                    Add</a>
+                <h3>Products</h3>
                 <br/>
-
-                <div class="view-box">
-                    <table class="table table-striped display" id="datatable">
+                    <table class="table table-striped display" id="productTable">
                         <thead>
                         <tr>
                             <th>ID</th>
@@ -41,26 +41,33 @@
                             <td><fmt:formatNumber type="number" minFractionDigits="1" maxFractionDigits="1" value = "${product.rating}"/></td>
                             <td><img src="${product.imageURL}"></td>
                             <%--<td><img alt="img" src="data:image/jpeg;base64,${product.base64ImageFile}"/></td>--%>
-                            <td><a><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></a></td>
-                            <td><a onclick="deleteRow(${product.productId})"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a></td>
+                            <td><a onclick="updateRow(${product.productId})">
+                                <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></a></td>
+                            <td><a onclick="deleteRow(${product.productId})">
+                                <span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a></td>
                         </tr>
                         </c:forEach>
                     </table>
                 </div>
             </div>
-        </div>
-    </div>
 
 <div class="modal fade" id="editRow">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                <h2 class="modal-title">Add a Product</h2>
+                <h2 class="modal-title" id="actionTitle"></h2>
             </div>
             <div class="modal-body">
                 <form class="form-horizontal" id="detailsForm">
-                    <input type="hidden" id="productId" name="productId">
+
+                    <div class="form-group">
+                        <label for="productId" class="control-label col-xs-3">ID</label>
+
+                        <div class="col-xs-9">
+                            <input id="disableIdEdit" type="number" class="form-control" id="productId" name="productId" placeholder="ID"  >
+                        </div>
+                    </div>
 
                     <div class="form-group">
                         <label for="title" class="control-label col-xs-3">Title</label>
@@ -87,6 +94,14 @@
                     </div>
 
                     <div class="form-group">
+                        <label for="inetPrice" class="control-label col-xs-3">Internet Price</label>
+
+                        <div class="col-xs-9">
+                            <input type="number" class="form-control" id="inetPrice" name="inetPrice" placeholder="Internet Price">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
                         <label for="rating" class="control-label col-xs-3">Rating</label>
 
                         <div class="col-xs-9">
@@ -95,17 +110,17 @@
                     </div>
 
                     <div class="form-group">
-                        <label for="image" class="control-label col-xs-3">Image</label>
+                        <label for="imageURL" class="control-label col-xs-3">ImageURL</label>
 
                         <div class="col-xs-9">
-                            <input type="image" class="form-control" id="image" name="rating" placeholder="Image">
+                            <input type="text" class="form-control" id="imageURL" name="imageURL" placeholder="ImageURL">
                         </div>
                     </div>
 
 
                     <div class="form-group">
                         <div class="col-xs-offset-3 col-xs-9">
-                            <button type="submit" class="btn btn-primary">
+                            <button type="button" onclick="save()" class="btn btn-primary">
                                 <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
                             </button>
                         </div>

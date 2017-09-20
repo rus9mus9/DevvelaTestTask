@@ -1,6 +1,7 @@
 package model;
 
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 import javax.persistence.*;
 import java.net.URL;
@@ -43,11 +44,11 @@ public class Product
    @Column(name = "rating")
    private double rating;
 
-   @Column(name = "image")
-   private byte[] image;
-
-   @Column(name = "base64Encoded")
+   /*@Column(name = "base64Encoded")
    private String base64ImageFile;
+
+   @Column(name = "image")
+   private byte[] image;*/
 
    @Column(name = "imageurl")
    private URL imageURL;
@@ -70,7 +71,13 @@ public class Product
    {
 
    }
-    public Product(Integer productId, String title, String description, int price, int inetPrice, double rating, URL imageURL, byte[] image)
+    public Product(Integer productId,
+                   String title,
+                   String description,
+                   int price,
+                   int inetPrice,
+                   double rating,
+                   URL imageURL) //byte[] image)
     {
         this.productId = productId;
         this.title = title;
@@ -79,10 +86,10 @@ public class Product
         this.inetPrice = inetPrice;
         this.rating = rating;
         this.imageURL = imageURL;
-        this.image = image;
+        //this.image = image;
     }
 
-    public String getBase64ImageFile()
+    /*public String getBase64ImageFile()
     {
         return base64ImageFile;
     }
@@ -90,7 +97,7 @@ public class Product
     public void setBase64ImageFile(String base64ImageFile)
     {
         this.base64ImageFile = base64ImageFile;
-    }
+    }*/
 
     public int getViews()
     {
@@ -162,7 +169,7 @@ public class Product
         this.inetPrice = inetPrice;
     }
 
-    public byte[] getImage()
+ /*   public byte[] getImage()
     {
         return image;
     }
@@ -170,7 +177,7 @@ public class Product
     public void setImage(byte[] image)
     {
         this.image = image;
-    }
+    }*/
 
     public boolean isNew() {return this.productId == null;}
 
@@ -184,7 +191,7 @@ public class Product
                 ", price=" + price +
                 ", inetPrice=" + inetPrice +
                 ", rating=" + rating +
-                ", image=" + Arrays.toString(image) +
+                /*", image=" + Arrays.toString(image) */+
                 '}';
     }
 }

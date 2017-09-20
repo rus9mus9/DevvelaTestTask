@@ -9,7 +9,7 @@ CREATE TABLE products
   rating REAL NOT NULL,
   inetPrice INTEGER,
   imageURL VARCHAR,
-  image BYTEA,
-  base64Encoded VARCHAR,
+/*  image BYTEA,
+  base64Encoded VARCHAR,*/
   views INTEGER
 );
