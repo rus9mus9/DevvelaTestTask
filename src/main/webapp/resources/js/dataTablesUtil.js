@@ -12,8 +12,9 @@ function makeEditable() {
 
 function add() {
     form.find(":input").val("");
+    $('#onClickButton').attr('onclick', 'save()');
     $('#actionTitle').text("Add a Product");
-    $('#disableIdEdit').prop('disabled', false);
+    $('#productId').prop('readonly', false);
     $("#editRow").modal();
 }
 
@@ -22,8 +23,9 @@ function updateRow(id) {
         $.each(data, function (key, value) {
             form.find("input[name='" + key + "']").val(value);
         });
+        $('#onClickButton').attr('onclick', 'update()');
         $('#actionTitle').text("Edit a Product");
-        $('#disableIdEdit').prop('disabled', true);
+        $('#productId').prop('readonly', true);
         $('#editRow').modal();
     });
 }
@@ -46,12 +48,25 @@ function updateTableByData(data) {
 function save() {
     $.ajax({
         type: "POST",
-        url: ajaxUrl,
+        url: ajaxUrl + "create",
         data: form.serialize(),
         success: function () {
             $("#editRow").modal("hide");
             updateTable();
             successNoty("Saved");
+        }
+    });
+}
+
+function update() {
+    $.ajax({
+        type: "POST",
+        url: ajaxUrl + "update",
+        data: form.serialize(),
+        success: function () {
+            $("#editRow").modal("hide");
+            updateTable();
+            successNoty("Updated");
         }
     });
 }
@@ -78,7 +93,7 @@ function successNoty(text) {
 function failNoty(event, jqXHR, options, jsExc) {
     closeNoty();
     failedNote = new Noty({
-        text: "<span class='glyphicon glyphicon-exclamation-sign'></span> &nbsp;Error status: " + jqXHR.status,
+        text: "<span class='glyphicon glyphicon-exclamation-sign'></span> &nbsp;Error status: " + jqXHR.status + (jqXHR.responseJSON ? "<br>" + jqXHR.responseJSON : ""),
         type: "error",
         layout: "bottomRight"
     }).show();

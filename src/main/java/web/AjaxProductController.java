@@ -2,18 +2,24 @@ package web;
 
 import model.Product;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import service.ProductService;
 
+import javax.validation.Valid;
 import java.net.URL;
 import java.util.List;
+import java.util.StringJoiner;
 
 
 @RestController
 @RequestMapping(value = "/ajax/products")
 public class AjaxProductController
 {
+
     @Autowired
     private ProductService service;
 
@@ -35,27 +41,44 @@ public class AjaxProductController
        return service.getAll();
     }
 
-    @PostMapping
-    public void createOrUpdate(/*@RequestParam("productId") Integer productId,
-                               @RequestParam("title") String title,
-                               @RequestParam("description") String description,
-                               @RequestParam("price") int price,
-                               @RequestParam("inetPrice") int inetPrice,
-                               @RequestParam("rating") double rating,
-                               @RequestParam("imageURL") URL imageURL*/ Product product) {
-       // Product product = new Product(productId, title, description, price, inetPrice, rating, imageURL);
-        boolean isNew = true;
+    @PostMapping("/create")
+    public ResponseEntity<String> create(@Valid Product product, BindingResult result ) {
 
-        for(Product productComp : service.getAll())
-        {
-            if(product.getProductId().equals(productComp.getProductId()))
-            {
-                isNew = false;
-                service.update(product);
-                break;
-            }
+        if (result.hasErrors()) {
+            StringJoiner joiner = new StringJoiner("<br>");
+            result.getFieldErrors().forEach(
+                    fe -> {
+                        String msg = fe.getDefaultMessage();
+                        if (!msg.startsWith(fe.getField())) {
+                            msg = fe.getField() + ' ' + msg;
+                        }
+                        joiner.add(msg);
+                    });
+            return new ResponseEntity<>(joiner.toString(), HttpStatus.UNPROCESSABLE_ENTITY);
         }
-        if(isNew)
+       // Product product = new Product(productId, title, description, price, inetPrice, rating, imageURL);
         service.insert(product);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @PostMapping("/update")
+    public ResponseEntity<String> update(@Valid Product product, BindingResult result)
+    {
+
+        if (result.hasErrors()) {
+            StringJoiner joiner = new StringJoiner("<br>");
+            result.getFieldErrors().forEach(
+                    fe -> {
+                        String msg = fe.getDefaultMessage();
+                        if (!msg.startsWith(fe.getField())) {
+                            msg = fe.getField() + ' ' + msg;
+                        }
+                        joiner.add(msg);
+                    });
+            return new ResponseEntity<>(joiner.toString(), HttpStatus.UNPROCESSABLE_ENTITY);
+        }
+
+        service.update(product);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 }

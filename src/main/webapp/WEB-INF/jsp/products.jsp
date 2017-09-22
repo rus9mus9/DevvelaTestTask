@@ -65,7 +65,7 @@
                         <label for="productId" class="control-label col-xs-3">ID</label>
 
                         <div class="col-xs-9">
-                            <input id="disableIdEdit" type="number" class="form-control" id="productId" name="productId" placeholder="ID"  >
+                            <input type="number" class="form-control" id="productId" name="productId" placeholder="ID"  >
                         </div>
                     </div>
 
@@ -120,7 +120,7 @@
 
                     <div class="form-group">
                         <div class="col-xs-offset-3 col-xs-9">
-                            <button type="button" onclick="save()" class="btn btn-primary">
+                            <button type="button" id="onClickButton"  <%--onclick="save()"--%> class="btn btn-primary">
                                 <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
                             </button>
                         </div>

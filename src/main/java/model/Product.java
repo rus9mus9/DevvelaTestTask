@@ -2,8 +2,12 @@ package model;
 
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import org.hibernate.validator.constraints.NotEmpty;
 
 import javax.persistence.*;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
 import java.net.URL;
 import java.util.Arrays;
 
@@ -27,21 +31,27 @@ public class Product
 
    @Id
    @Column(name = "id", nullable = false)
+   @NotNull
    private Integer productId;
 
    @Column(name = "title")
+   @NotNull
    private String title;
 
    @Column(name = "description")
    private String description;
 
    @Column(name = "price")
+   @Min(1)
    private int price;
 
    @Column(name = "inetprice")
+   @Min(1)
    private int inetPrice;
 
    @Column(name = "rating")
+   @Min(value = 0, message = " Rating must be between 0.0 and 5.0 ")
+   @Max(5)
    private double rating;
 
    /*@Column(name = "base64Encoded")
@@ -179,7 +189,6 @@ public class Product
         this.image = image;
     }*/
 
-    public boolean isNew() {return this.productId == null;}
 
     @Override
     public String toString()
