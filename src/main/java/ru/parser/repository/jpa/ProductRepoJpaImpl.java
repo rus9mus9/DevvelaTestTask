@@ -37,17 +37,17 @@ public class ProductRepoJpaImpl implements ProductRepo
     }
 
     @Override
-    public Product get(int id)
+    public Product get(int baseId)
     {
-        return em.find(Product.class, id);
+        return em.find(Product.class, baseId);
     }
 
     @Transactional
     @Override
-    public boolean delete(int id)
+    public boolean delete(int baseId)
     {
         return em.createNamedQuery(Product.DELETE)
-                .setParameter("id", id).
+                .setParameter("id", baseId).
                         executeUpdate() != 0;
     }
 

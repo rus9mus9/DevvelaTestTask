@@ -11,9 +11,9 @@ import static com.fasterxml.jackson.annotation.JsonAutoDetect.Visibility.ANY;
 import static com.fasterxml.jackson.annotation.JsonAutoDetect.Visibility.NONE;
 
 @NamedQueries({
-        @NamedQuery(name = Product.DELETE, query = "DELETE FROM Product p WHERE p.productId=:id"),
+        @NamedQuery(name = Product.DELETE, query = "DELETE FROM Product p WHERE p.baseId=:id"),
         @NamedQuery(name = Product.GET_ALL, query = "SELECT p FROM Product p"),
-        @NamedQuery(name = Product.GET_VIEWS, query = "SELECT p FROM Product p WHERE p.productId=:id"),
+        @NamedQuery(name = Product.GET_VIEWS, query = "SELECT p FROM Product p WHERE p.baseId=:id"),
 })
 
 @Entity
@@ -21,18 +21,23 @@ import static com.fasterxml.jackson.annotation.JsonAutoDetect.Visibility.NONE;
 @JsonAutoDetect(fieldVisibility = ANY, getterVisibility = NONE, isGetterVisibility = NONE, setterVisibility = NONE)
 public class Product
 {
-   public static final String DELETE = "Meal.delete";
-   public static final String GET_ALL = "Meal.getAll()";
-   public static final String GET_VIEWS = "Meal.getViews()";
+   public static final String DELETE = "Product.delete";
+   public static final String GET_ALL = "Product.getAll()";
+   public static final String GET_VIEWS = "Product.getViews()";
 
 
    @Id
-   @Column(name = "id")
+   @SequenceGenerator(name = "base_seq", sequenceName = "base_seq", allocationSize = 1, initialValue = 1)
+   @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "base_seq")
+   private Integer baseId;
+
+   @Column(name = "productId")
    @NotNull(message = " ID must not be blank ")
    private Integer productId;
 
    @Column(name = "title", nullable = false)
    @NotBlank(message = " Title must not be blank ")
+   @Pattern(regexp = "^[а-яА-ЯёЁa-zA-Z0-9 ]+$", message = " Title can contain only numbers, Cyrillic, Latin scripts and space char ")
    private String title;
 
    @Column(name = "description")
@@ -49,15 +54,9 @@ public class Product
 
    @Column(name = "rating")
    @Min(value = 0, message = " Rating must be between 0.0 and 5.0 ")
-   @Max(5)
+   @Max(value = 5, message = " Rating must be between 0.0 and 5.0 ")
    @NotNull(message= "Rating must not be blank ")
    private Double rating;
-
-   /*@Column(name = "base64Encoded")
-   private String base64ImageFile;
-
-   @Column(name = "image")
-   private byte[] image;*/
 
    @Column(name = "imageurl")
    private URL imageURL;
@@ -80,7 +79,8 @@ public class Product
    {
 
    }
-    public Product(Integer productId,
+    public Product(Integer baseId,
+                   Integer productId,
                    String title,
                    String description,
                    Integer price,
@@ -88,6 +88,7 @@ public class Product
                    Double rating,
                    URL imageURL) //byte[] image)
     {
+        this.baseId = baseId;
         this.productId = productId;
         this.title = title;
         this.description = description;
@@ -163,11 +164,6 @@ public class Product
         return price;
     }
 
-    public void setPrice(int price)
-    {
-        this.price = price;
-    }
-
     public Integer getInetPrice()
     {
         return inetPrice;
@@ -201,5 +197,25 @@ public class Product
                 ", rating=" + rating +
                 /*", image=" + Arrays.toString(image) */+
                 '}';
+    }
+
+    public Integer getBaseId()
+    {
+        return baseId;
+    }
+
+    public void setBaseId(Integer baseId)
+    {
+        this.baseId = baseId;
+    }
+
+    public void setPrice(Integer price)
+    {
+        this.price = price;
+    }
+
+    public boolean isNew()
+    {
+        return this.baseId == null;
     }
 }

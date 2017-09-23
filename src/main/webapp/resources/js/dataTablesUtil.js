@@ -12,9 +12,9 @@ function makeEditable() {
 
 function add() {
     form.find(":input").val("");
-    $('#onClickButton').attr('onclick', 'save()');
+    /*$('#onClickButton').attr('onclick', 'save()');*/
     $('#actionTitle').text("Add a Product");
-    $('#productId').prop('readonly', false);
+    /*$('#productId').prop('readonly', false);*/
     $("#editRow").modal();
 }
 
@@ -23,16 +23,16 @@ function updateRow(id) {
         $.each(data, function (key, value) {
             form.find("input[name='" + key + "']").val(value);
         });
-        $('#onClickButton').attr('onclick', 'update()');
+        /*$('#onClickButton').attr('onclick', 'update()');*/
         $('#actionTitle').text("Edit a Product");
-        $('#productId').prop('readonly', true);
+        /*$('#productId').prop('readonly', true);*/
         $('#editRow').modal();
     });
 }
 
-function deleteRow(productId) {
+function deleteRow(baseId) {
     $.ajax({
-        url: ajaxUrl + productId,
+        url: ajaxUrl + baseId,
         type: "DELETE",
         success: function () {
             updateTable();
@@ -48,25 +48,12 @@ function updateTableByData(data) {
 function save() {
     $.ajax({
         type: "POST",
-        url: ajaxUrl + "create",
+        url: ajaxUrl,
         data: form.serialize(),
         success: function () {
             $("#editRow").modal("hide");
             updateTable();
             successNoty("Saved");
-        }
-    });
-}
-
-function update() {
-    $.ajax({
-        type: "POST",
-        url: ajaxUrl + "update",
-        data: form.serialize(),
-        success: function () {
-            $("#editRow").modal("hide");
-            updateTable();
-            successNoty("Updated");
         }
     });
 }

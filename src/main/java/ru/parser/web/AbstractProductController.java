@@ -15,16 +15,16 @@ public abstract class AbstractProductController
     @Autowired
     private ProductService service;
 
-    public Product get(int productId)
+    public Product get(int baseId)
     {
-        log.info("get {}", productId);
-        return service.get(productId);
+        log.info("get {}", baseId);
+        return service.get(baseId);
     }
 
-    public void delete(int productId)
+    public void delete(int baseId)
     {
-        log.info("delete {}", productId);
-        service.delete(productId);
+        log.info("delete {}", baseId);
+        service.delete(baseId);
     }
 
     public List<Product> getAll()
@@ -39,9 +39,9 @@ public abstract class AbstractProductController
         return service.insert(product);
     }
 
-    public void update(Product product, int id)
+    public void update(Product product, int baseId)
     {
-        log.info("update {} with id={}", product, id);
+        log.info("update {} with id={}", product, baseId);
         service.update(product);
     }
 }

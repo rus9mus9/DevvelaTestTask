@@ -20,18 +20,18 @@ public class AjaxProductController extends AbstractProductController
     /*@Autowired
     private ProductService ru.parser.service;*/
 
-    @GetMapping(value="/{productId}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public Product get(@PathVariable("productId") int productId)
+    @GetMapping(value="/{baseId}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public Product get(@PathVariable("baseId") int baseId)
     {
        /*return ru.parser.service.get(productId); */
-       return super.get(productId);
+       return super.get(baseId);
     }
 
-    @DeleteMapping("/{productId}")
-    public void delete(@PathVariable("productId") int productId)
+    @DeleteMapping("/{baseId}")
+    public void delete(@PathVariable("baseId") int baseId)
     {
         /*ru.parser.service.delete(productId);*/
-        super.delete(productId);
+        super.delete(baseId);
     }
 
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
@@ -41,8 +41,9 @@ public class AjaxProductController extends AbstractProductController
        return super.getAll();
     }
 
-    @PostMapping("/create")
-    public ResponseEntity<String> create(@Valid Product product, BindingResult result ) {
+    @PostMapping
+    public ResponseEntity<String> update(@Valid Product product, BindingResult result)
+    {
 
         if (result.hasErrors()) {
             StringJoiner joiner = new StringJoiner("<br>");
@@ -56,29 +57,14 @@ public class AjaxProductController extends AbstractProductController
                     });
             return new ResponseEntity<>(joiner.toString(), HttpStatus.UNPROCESSABLE_ENTITY);
         }
-       // Product product = new Product(productId, title, description, price, inetPrice, rating, imageURL);
+        if(product.isNew())
+        {
         super.insert(product);
-        return new ResponseEntity<>(HttpStatus.OK);
-    }
-
-    @PostMapping("/update")
-    public ResponseEntity<String> update(@Valid Product product, BindingResult result)
-    {
-
-        if (result.hasErrors()) {
-            StringJoiner joiner = new StringJoiner("<br>");
-            result.getFieldErrors().forEach(
-                    fe -> {
-                        String msg = fe.getDefaultMessage();
-                        if (!msg.startsWith(fe.getField())) {
-                            msg = fe.getField() + ' ' + msg;
-                        }
-                        joiner.add(msg);
-                    });
-            return new ResponseEntity<>(joiner.toString(), HttpStatus.UNPROCESSABLE_ENTITY);
         }
-
-        super.update(product, product.getProductId());
+        else
+            {
+                super.update(product, product.getProductId());
+            }
         return new ResponseEntity<>(HttpStatus.OK);
     }
 }

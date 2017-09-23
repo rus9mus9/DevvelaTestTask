@@ -35,9 +35,9 @@ public class ProductServiceImpl implements ProductService
         return productRepo.get(id);
     }
 
-    public boolean delete(int id)
+    public void delete(int id)
     {
-       return productRepo.delete(id);
+       productRepo.delete(id);
     }
 
     public int getViews(Product product)

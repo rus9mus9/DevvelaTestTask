@@ -1,4 +1,5 @@
 DROP TABLE IF EXISTS products;
+DROP SEQUENCE IF EXISTS base_seq;
 
 CREATE SEQUENCE base_seq START 1;
 

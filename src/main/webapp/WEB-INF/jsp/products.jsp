@@ -41,9 +41,9 @@
                             <td><fmt:formatNumber type="number" minFractionDigits="1" maxFractionDigits="1" value = "${product.rating}"/></td>
                             <td><img src="${product.imageURL}"></td>
                             <%--<td><img alt="img" src="data:image/jpeg;base64,${product.base64ImageFile}"/></td>--%>
-                            <td><a onclick="updateRow(${product.productId})">
+                            <td><a onclick="updateRow(${product.baseId})">
                                 <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></a></td>
-                            <td><a onclick="deleteRow(${product.productId})">
+                            <td><a onclick="deleteRow(${product.baseId})">
                                 <span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a></td>
                         </tr>
                         </c:forEach>
@@ -60,12 +60,13 @@
             </div>
             <div class="modal-body">
                 <form class="form-horizontal" id="detailsForm">
+                    <input type="hidden" id="baseId" name="baseId">
 
                     <div class="form-group">
                         <label for="productId" class="control-label col-xs-3">ID</label>
 
                         <div class="col-xs-9">
-                            <input type="number" class="form-control" id="productId" name="productId" placeholder="ID"  >
+                            <input type="number" class="form-control" id="productId" min="1" name="productId" placeholder="ID"  >
                         </div>
                     </div>
 
@@ -89,7 +90,7 @@
                         <label for="price" class="control-label col-xs-3">Price</label>
 
                         <div class="col-xs-9">
-                            <input type="number" class="form-control" id="price" name="price" placeholder="Price">
+                            <input type="number" class="form-control" id="price" min="1" name="price" placeholder="Price">
                         </div>
                     </div>
 
@@ -97,7 +98,7 @@
                         <label for="inetPrice" class="control-label col-xs-3">Internet Price</label>
 
                         <div class="col-xs-9">
-                            <input type="number" class="form-control" id="inetPrice" name="inetPrice" placeholder="Internet Price">
+                            <input type="number" class="form-control" id="inetPrice" min="1" name="inetPrice" placeholder="Internet Price">
                         </div>
                     </div>
 
@@ -105,7 +106,7 @@
                         <label for="rating" class="control-label col-xs-3">Rating</label>
 
                         <div class="col-xs-9">
-                            <input type="number" class="form-control" id="rating" name="rating" placeholder="Rating">
+                            <input type="number" step="0.1" min="0" class="form-control" id="rating" name="rating" placeholder="Rating">
                         </div>
                     </div>
 
@@ -113,14 +114,14 @@
                         <label for="imageURL" class="control-label col-xs-3">ImageURL</label>
 
                         <div class="col-xs-9">
-                            <input type="text" class="form-control" id="imageURL" name="imageURL" placeholder="ImageURL">
+                            <input type="url" class="form-control" id="imageURL" name="imageURL" placeholder="ImageURL">
                         </div>
                     </div>
 
 
                     <div class="form-group">
                         <div class="col-xs-offset-3 col-xs-9">
-                            <button type="button" id="onClickButton"  <%--onclick="save()"--%> class="btn btn-primary">
+                            <button type="button" id="onClickButton"  onclick="save()" class="btn btn-primary">
                                 <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
                             </button>
                         </div>
