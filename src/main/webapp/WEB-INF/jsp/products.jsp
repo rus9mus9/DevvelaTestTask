@@ -32,7 +32,7 @@
                         </tr>
                         </thead>
                         <c:forEach items="${products}" var="product">
-                            <jsp:useBean id="product" scope="page" type="model.Product"/>
+                            <jsp:useBean id="product" scope="page" type="ru.parser.model.Product"/>
                         <tr>
                             <td>${product.productId}</td>
                             <td>${product.title}</td>

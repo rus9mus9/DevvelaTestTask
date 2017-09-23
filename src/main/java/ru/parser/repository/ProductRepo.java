@@ -1,6 +1,6 @@
-package repository;
+package ru.parser.repository;
 
-import model.Product;
+import ru.parser.model.Product;
 
 import java.util.List;
 

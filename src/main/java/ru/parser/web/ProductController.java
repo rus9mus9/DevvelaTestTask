@@ -1,6 +1,6 @@
-package web;
+package ru.parser.web;
 
-import model.Product;
+import ru.parser.model.Product;
 import org.apache.commons.io.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -10,13 +10,12 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.xml.sax.SAXException;
-import service.ProductService;
-import util.ProductParserUtil;
+import ru.parser.service.ProductService;
+import ru.parser.util.ProductParserUtil;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.xml.parsers.ParserConfigurationException;
 import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.net.URL;
 import java.util.Objects;
@@ -96,9 +95,9 @@ public class ProductController
                 request.getParameter("image").getBytes());
 
         if (product.getProductId() == null) {
-            service.insert(product);
+            ru.parser.service.insert(product);
         } else {
-            service.update(product);
+            ru.parser.service.update(product);
         }
         return "redirect:/products";
     }*/

@@ -1,9 +1,10 @@
-package service;
+package ru.parser.service;
 
-import model.Product;
+import ru.parser.model.Product;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import repository.ProductRepo;
+import ru.parser.repository.ProductRepo;
+
 
 import java.util.List;
 
@@ -24,9 +25,9 @@ public class ProductServiceImpl implements ProductService
        return productRepo.insert(product);
     }
 
-    public Product update(Product product)
+    public void update(Product product)
     {
-        return productRepo.update(product);
+        productRepo.update(product);
     }
 
     public Product get(int id)
@@ -39,10 +40,9 @@ public class ProductServiceImpl implements ProductService
        return productRepo.delete(id);
     }
 
-    @Override
-    public int getViews(int id)
+    public int getViews(Product product)
     {
-        return 0;
+        return productRepo.getViews(product.getProductId());
     }
 
     public List<Product> getBad()

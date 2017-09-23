@@ -1,44 +1,44 @@
-package web;
+package ru.parser.web;
 
-import model.Product;
-import org.springframework.beans.factory.annotation.Autowired;
+import ru.parser.model.Product;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-import service.ProductService;
 
 import javax.validation.Valid;
-import java.net.URL;
 import java.util.List;
 import java.util.StringJoiner;
 
 
 @RestController
 @RequestMapping(value = "/ajax/products")
-public class AjaxProductController
+public class AjaxProductController extends AbstractProductController
 {
 
-    @Autowired
-    private ProductService service;
+    /*@Autowired
+    private ProductService ru.parser.service;*/
 
     @GetMapping(value="/{productId}", produces = MediaType.APPLICATION_JSON_VALUE)
     public Product get(@PathVariable("productId") int productId)
     {
-       return service.get(productId);
+       /*return ru.parser.service.get(productId); */
+       return super.get(productId);
     }
 
     @DeleteMapping("/{productId}")
     public void delete(@PathVariable("productId") int productId)
     {
-        service.delete(productId);
+        /*ru.parser.service.delete(productId);*/
+        super.delete(productId);
     }
 
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public List<Product> getAll()
     {
-       return service.getAll();
+       /*return ru.parser.service.getAll();*/
+       return super.getAll();
     }
 
     @PostMapping("/create")
@@ -49,15 +49,15 @@ public class AjaxProductController
             result.getFieldErrors().forEach(
                     fe -> {
                         String msg = fe.getDefaultMessage();
-                        if (!msg.startsWith(fe.getField())) {
+                        /*if (!msg.startsWith(fe.getField())) {
                             msg = fe.getField() + ' ' + msg;
-                        }
+                        }*/
                         joiner.add(msg);
                     });
             return new ResponseEntity<>(joiner.toString(), HttpStatus.UNPROCESSABLE_ENTITY);
         }
        // Product product = new Product(productId, title, description, price, inetPrice, rating, imageURL);
-        service.insert(product);
+        super.insert(product);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
@@ -78,7 +78,7 @@ public class AjaxProductController
             return new ResponseEntity<>(joiner.toString(), HttpStatus.UNPROCESSABLE_ENTITY);
         }
 
-        service.update(product);
+        super.update(product, product.getProductId());
         return new ResponseEntity<>(HttpStatus.OK);
     }
 }

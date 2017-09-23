@@ -1,6 +1,6 @@
-package repository.jdbc;
+package ru.parser.repository.jdbc;
 
-import model.Product;
+import ru.parser.model.Product;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.support.DataAccessUtils;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
@@ -9,7 +9,7 @@ import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.BeanPropertySqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Repository;
-import repository.ProductRepo;
+import ru.parser.repository.ProductRepo;
 
 import javax.sql.DataSource;
 import java.util.List;

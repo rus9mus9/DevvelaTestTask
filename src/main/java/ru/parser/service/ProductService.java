@@ -1,16 +1,16 @@
-package service;
+package ru.parser.service;
 
-import model.Product;
+import ru.parser.model.Product;
 
 import java.util.List;
 
 public interface ProductService
 {
     Product insert(Product product);
-    Product update(Product product);
+    void update(Product product);
     Product get(int id);
     boolean delete(int id);
-    int getViews(int id);
+    int getViews(Product product);
 
     List<Product> getBad();
     List<Product> getNormal();

@@ -93,7 +93,7 @@ function successNoty(text) {
 function failNoty(event, jqXHR, options, jsExc) {
     closeNoty();
     failedNote = new Noty({
-        text: "<span class='glyphicon glyphicon-exclamation-sign'></span> &nbsp;Error status: " + jqXHR.status + (jqXHR.responseJSON ? "<br>" + jqXHR.responseJSON : ""),
+        text: "<span class='glyphicon glyphicon-exclamation-sign'></span> &nbsp;Error status: " + jqXHR.status + (jqXHR.responseText ? "<br>" + jqXHR.responseText : ""),
         type: "error",
         layout: "bottomRight"
     }).show();

@@ -1,9 +1,9 @@
-package repository.jpa;
+package ru.parser.repository.jpa;
 
-import model.Product;
+import ru.parser.model.Product;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
-import repository.ProductRepo;
+import ru.parser.repository.ProductRepo;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import java.util.ArrayList;

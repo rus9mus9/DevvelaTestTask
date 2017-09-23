@@ -1,8 +1,11 @@
 DROP TABLE IF EXISTS products;
 
+CREATE SEQUENCE base_seq START 1;
+
 CREATE TABLE products
 (
-  id INTEGER NOT NULL,
+  baseId INTEGER PRIMARY KEY DEFAULT nextval('base_seq'),
+  productId INTEGER NOT NULL,
   title VARCHAR NOT NULL,
   description  VARCHAR,
   price INTEGER NOT NULL,

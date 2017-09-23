@@ -3,7 +3,7 @@
 <jsp:include page="fragments/headTag.jsp"/>
 <body>
 <section>
-    <jsp:useBean id="product" type="model.Product" scope="request"/>
+    <jsp:useBean id="product" type="ru.parser.model.Product" scope="request"/>
     <h3>${product.isNew() ? "Add product" : "Edit Product"}</h3>
     <hr>
     <form method = "post" action = "products">

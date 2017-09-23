@@ -1,15 +1,11 @@
-package model;
+package ru.parser.model;
 
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import org.hibernate.validator.constraints.NotEmpty;
 
 import javax.persistence.*;
-import javax.validation.constraints.Max;
-import javax.validation.constraints.Min;
-import javax.validation.constraints.NotNull;
+import javax.validation.constraints.*;
+
 import java.net.URL;
-import java.util.Arrays;
 
 import static com.fasterxml.jackson.annotation.JsonAutoDetect.Visibility.ANY;
 import static com.fasterxml.jackson.annotation.JsonAutoDetect.Visibility.NONE;
@@ -29,30 +25,33 @@ public class Product
    public static final String GET_ALL = "Meal.getAll()";
    public static final String GET_VIEWS = "Meal.getViews()";
 
+
    @Id
-   @Column(name = "id", nullable = false)
-   @NotNull
+   @Column(name = "id")
+   @NotNull(message = " ID must not be blank ")
    private Integer productId;
 
-   @Column(name = "title")
-   @NotNull
+   @Column(name = "title", nullable = false)
+   @NotBlank(message = " Title must not be blank ")
    private String title;
 
    @Column(name = "description")
    private String description;
 
    @Column(name = "price")
-   @Min(1)
-   private int price;
+   @NotNull(message = " Price must not be blank ")
+   @Min(value = 1, message = " Price must be greater or equal 1 ")
+   private Integer price;
 
    @Column(name = "inetprice")
-   @Min(1)
-   private int inetPrice;
+   @Min(value = 1, message = " Internet price must be greater or equal 1 ")
+   private Integer inetPrice;
 
    @Column(name = "rating")
    @Min(value = 0, message = " Rating must be between 0.0 and 5.0 ")
    @Max(5)
-   private double rating;
+   @NotNull(message= "Rating must not be blank ")
+   private Double rating;
 
    /*@Column(name = "base64Encoded")
    private String base64ImageFile;
@@ -64,7 +63,7 @@ public class Product
    private URL imageURL;
 
    @Column(name = "views")
-   private int views;
+   private Integer views;
 
     public URL getImageURL()
     {
@@ -84,9 +83,9 @@ public class Product
     public Product(Integer productId,
                    String title,
                    String description,
-                   int price,
-                   int inetPrice,
-                   double rating,
+                   Integer price,
+                   Integer inetPrice,
+                   Double rating,
                    URL imageURL) //byte[] image)
     {
         this.productId = productId;
@@ -109,12 +108,12 @@ public class Product
         this.base64ImageFile = base64ImageFile;
     }*/
 
-    public int getViews()
+    public Integer getViews()
     {
         return views;
     }
 
-    public void setViews(int views)
+    public void setViews(Integer views)
     {
         this.views = views;
     }
@@ -124,12 +123,12 @@ public class Product
         return productId;
     }
 
-    public double getRating()
+    public Double getRating()
     {
         return rating;
     }
 
-    public void setRating(double rating)
+    public void setRating(Double rating)
     {
         this.rating = rating;
     }
@@ -159,7 +158,7 @@ public class Product
         this.description = description;
     }
 
-    public double getPrice()
+    public Integer getPrice()
     {
         return price;
     }
@@ -169,12 +168,12 @@ public class Product
         this.price = price;
     }
 
-    public double getInetPrice()
+    public Integer getInetPrice()
     {
         return inetPrice;
     }
 
-    public void setInetPrice(int inetPrice)
+    public void setInetPrice(Integer inetPrice)
     {
         this.inetPrice = inetPrice;
     }
