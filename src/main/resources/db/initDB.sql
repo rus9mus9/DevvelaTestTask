@@ -10,7 +10,7 @@ CREATE TABLE products
   title VARCHAR NOT NULL,
   description  VARCHAR,
   price INTEGER NOT NULL,
-  rating REAL NOT NULL,
+  rating NUMERIC NOT NULL,
   inetPrice INTEGER,
   imageURL VARCHAR,
 /*  image BYTEA,

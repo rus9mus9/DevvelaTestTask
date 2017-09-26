@@ -8,6 +8,11 @@ function updateTable() {
 // $(document).ready(function () {
 $(function () {
     datatableApi = $("#productTable").DataTable({
+        "ajax":
+            {
+              "url":ajaxUrl,
+               "dataSrc":""
+            },
         "paging": true,
         "info": true,
         "columns": [
@@ -24,19 +29,30 @@ $(function () {
                 "data": "price"
             },
             {
-                "data": "rating"
+                "data": "rating",
+                "render": $.fn.dataTable.render.number('.','.', 1)
             },
             {
                 "data": "imageURL",
+                "render": function(data, type, row)
+                {
+                    if(type === "display")
+                    {
+                     return '<img src='+data+' />';
+                    }
+                    return data;
+                },
                 "orderable": false
             },
             {
-                "defaultContent": "Edit",
-                "orderable": false
+                "orderable": false,
+                "defaultContent": "",
+                "render": renderEditBtn
             },
             {
-                "defaultContent": "Delete",
-                "orderable": false
+                "orderable": false,
+                "defaultContent": "",
+                "render": renderDeleteBtn
             }
         ],
         "order": []

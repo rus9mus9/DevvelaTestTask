@@ -5,16 +5,12 @@ function makeEditable() {
     $(document).ajaxError(function (event, jqXHR, options, jsExc) {
         failNoty(event, jqXHR, options, jsExc);
     });
-
-    // solve problem with cache in IE: https://stackoverflow.com/a/4303862/548473
     $.ajaxSetup({cache: false});
 }
 
 function add() {
     form.find(":input").val("");
-    /*$('#onClickButton').attr('onclick', 'save()');*/
     $('#actionTitle').text("Add a Product");
-    /*$('#productId').prop('readonly', false);*/
     $("#editRow").modal();
 }
 
@@ -23,9 +19,7 @@ function updateRow(id) {
         $.each(data, function (key, value) {
             form.find("input[name='" + key + "']").val(value);
         });
-        /*$('#onClickButton').attr('onclick', 'update()');*/
         $('#actionTitle').text("Edit a Product");
-        /*$('#productId').prop('readonly', true);*/
         $('#editRow').modal();
     });
 }
@@ -84,4 +78,18 @@ function failNoty(event, jqXHR, options, jsExc) {
         type: "error",
         layout: "bottomRight"
     }).show();
+}
+
+function renderEditBtn(data, type, row) {
+    if (type === "display") {
+        return "<a onclick='updateRow(" + row.baseId + ");'>" +
+            "<span class='glyphicon glyphicon-pencil' aria-hidden='true'></span></a>";
+    }
+}
+
+function renderDeleteBtn(data, type, row) {
+    if (type === "display") {
+        return "<a onclick='deleteRow(" + row.baseId + ");'>" +
+            "<span class='glyphicon glyphicon-remove' aria-hidden='true'></span></a>";
+    }
 }

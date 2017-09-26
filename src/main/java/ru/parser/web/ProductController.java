@@ -32,7 +32,7 @@ public class ProductController
         return "index";
     }
 
-    @GetMapping("/products/delete")
+   /* @GetMapping("/products/delete")
     public String delete(HttpServletRequest request)
     {
         service.delete(getId(request));
@@ -49,7 +49,7 @@ public class ProductController
     public String create(Model model) {
         model.addAttribute("product", new Product());
         return "productForm";
-    }
+    }*/
 
     @PostMapping("/products")
     public String parse(@RequestParam("file") MultipartFile file, @RequestParam("urlFile") URL url, Model model) throws IOException, SAXException, ParserConfigurationException
@@ -79,9 +79,9 @@ public class ProductController
     }
 
     @GetMapping("/products")
-    public String getParsed(Model model)
+    public String getParsed(/*Model model*/)
     {
-        model.addAttribute("products", service.getAll());
+        /*model.addAttribute("products", service.getAll());*/
         return "products";
     }
 

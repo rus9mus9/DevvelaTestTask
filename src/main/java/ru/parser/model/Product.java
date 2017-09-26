@@ -37,7 +37,7 @@ public class Product
 
    @Column(name = "title", nullable = false)
    @NotBlank(message = " Title must not be blank ")
-   @Pattern(regexp = "^[а-яА-ЯёЁa-zA-Z0-9 ]+$", message = " Title can contain only numbers, Cyrillic, Latin scripts and space char ")
+   @Pattern(regexp = "^[()+а-яА-ЯёЁa-zA-Z0-9 /-]+$", message = " Title can contain only numbers, Cyrillic, Latin scripts and space char ")
    private String title;
 
    @Column(name = "description")

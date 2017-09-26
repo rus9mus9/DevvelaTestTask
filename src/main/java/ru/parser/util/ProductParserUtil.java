@@ -11,7 +11,10 @@ import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 import java.io.File;
 import java.io.IOException;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.net.URL;
+import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -41,15 +44,16 @@ public class ProductParserUtil
             Product productObj = new Product();
             Node p = productList.item(i);
 
+
             if(p.getNodeType() == Node.ELEMENT_NODE)
             {
                 Element product = (Element) p;
-                int productId;
+                Integer productId;
                 String title;
                 String description;
-                double rating;
-                int inet_price;
-                int price;
+                Double rating;
+                Integer inet_price;
+                Integer price;
                 URL imageURL;
 
                 try
@@ -85,7 +89,7 @@ public class ProductParserUtil
                     productObj.setDescription(description);
                     productObj.setPrice(price);
                     productObj.setInetPrice(inet_price);
-                    productObj.setRating(rating);
+                    productObj.setRating(new BigDecimal(rating).setScale(1, RoundingMode.HALF_UP).doubleValue());
                     productObj.setImageURL(imageURL);
                     allProducts.add(productObj);
 
@@ -119,5 +123,11 @@ public class ProductParserUtil
             e.printStackTrace();
             return null;
         }
+    }*/
+/*    public static Double round(Double value, int places)
+    {
+        BigDecimal bd = new BigDecimal(value);
+        bd = bd.setScale(places, RoundingMode.HALF_UP);
+        return bd.doubleValue();
     }*/
 }

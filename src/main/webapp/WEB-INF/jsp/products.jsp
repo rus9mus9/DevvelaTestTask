@@ -31,22 +31,6 @@
                             <th></th>
                         </tr>
                         </thead>
-                        <c:forEach items="${products}" var="product">
-                            <jsp:useBean id="product" scope="page" type="ru.parser.model.Product"/>
-                        <tr>
-                            <td>${product.productId}</td>
-                            <td>${product.title}</td>
-                            <td>${product.description}</td>
-                            <td><fmt:formatNumber type="number" maxFractionDigits="0" value = "${product.price}"/></td>
-                            <td><fmt:formatNumber type="number" minFractionDigits="1" maxFractionDigits="1" value = "${product.rating}"/></td>
-                            <td><img src="${product.imageURL}"></td>
-                            <%--<td><img alt="img" src="data:image/jpeg;base64,${product.base64ImageFile}"/></td>--%>
-                            <td><a onclick="updateRow(${product.baseId})">
-                                <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></a></td>
-                            <td><a onclick="deleteRow(${product.baseId})">
-                                <span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a></td>
-                        </tr>
-                        </c:forEach>
                     </table>
                 </div>
             </div>
@@ -106,7 +90,7 @@
                         <label for="rating" class="control-label col-xs-3">Rating</label>
 
                         <div class="col-xs-9">
-                            <input type="number" step="0.1" min="0" class="form-control" id="rating" name="rating" placeholder="Rating">
+                            <input  type="number" step="0.1" min="0" class="form-control" id="rating" name="rating" placeholder="Rating">
                         </div>
                     </div>
 
