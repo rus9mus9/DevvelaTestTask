@@ -4,7 +4,7 @@
 </head>--%>
 <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
     <div class="container">
-        <a href="/parser" class="navbar-brand">Upload a new file..</a>
+        <a href="/parser" class="navbar-brand">Choose a new file..</a>
 
         <div class="collapse navbar-collapse">
             <form class="navbar-form navbar-right">

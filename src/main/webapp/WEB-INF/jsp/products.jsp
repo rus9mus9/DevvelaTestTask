@@ -21,12 +21,13 @@
                     <table class="table table-striped display" id="productTable">
                         <thead>
                         <tr>
+                            <th>baseId</th>
                             <th>ID</th>
                             <th>Title</th>
                             <th>Description</th>
                             <th>Price</th>
                             <th>Rating</th>
-                            <th>Image</th>
+                            <th style="text-align:center">Image</th>
                             <th></th>
                             <th></th>
                         </tr>

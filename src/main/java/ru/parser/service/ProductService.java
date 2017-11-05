@@ -10,10 +10,7 @@ public interface ProductService
     void update(Product product);
     Product get(int id);
     void delete(int id);
-    int getViews(Product product);
+    int getAllViews();
 
-    List<Product> getBad();
-    List<Product> getNormal();
-    List<Product> getGood();
     List<Product> getAll();
 }

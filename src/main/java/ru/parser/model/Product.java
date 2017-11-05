@@ -27,7 +27,7 @@ public class Product
 
 
    @Id
-   @SequenceGenerator(name = "base_seq", sequenceName = "base_seq", allocationSize = 1, initialValue = 1)
+   @SequenceGenerator(name = "base_seq", sequenceName = "base_seq", allocationSize = 1)
    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "base_seq")
    private Integer baseId;
 
@@ -37,7 +37,7 @@ public class Product
 
    @Column(name = "title", nullable = false)
    @NotBlank(message = " Title must not be blank ")
-   @Pattern(regexp = "^[()+а-яА-ЯёЁa-zA-Z0-9 /-]+$", message = " Title can contain only numbers, Cyrillic, Latin scripts and space char ")
+   @Pattern(regexp = "^[()+а-яА-ЯёЁa-zA-Z0-9 /-]+$", message = " Title can contain only numbers, Cyrillic, Latin scripts, space char, '/', '-', '+' and parenthesis")
    private String title;
 
    @Column(name = "description")
@@ -62,7 +62,7 @@ public class Product
    private URL imageURL;
 
    @Column(name = "views")
-   private Integer views;
+   private int views;
 
     public URL getImageURL()
     {
@@ -86,7 +86,7 @@ public class Product
                    Integer price,
                    Integer inetPrice,
                    Double rating,
-                   URL imageURL) //byte[] image)
+                   URL imageURL)
     {
         this.baseId = baseId;
         this.productId = productId;
@@ -96,25 +96,15 @@ public class Product
         this.inetPrice = inetPrice;
         this.rating = rating;
         this.imageURL = imageURL;
-        //this.image = image;
     }
 
-    /*public String getBase64ImageFile()
-    {
-        return base64ImageFile;
-    }
 
-    public void setBase64ImageFile(String base64ImageFile)
-    {
-        this.base64ImageFile = base64ImageFile;
-    }*/
-
-    public Integer getViews()
+    public int getViews()
     {
         return views;
     }
 
-    public void setViews(Integer views)
+    public void setViews(int views)
     {
         this.views = views;
     }
@@ -173,17 +163,6 @@ public class Product
     {
         this.inetPrice = inetPrice;
     }
-
- /*   public byte[] getImage()
-    {
-        return image;
-    }
-
-    public void setImage(byte[] image)
-    {
-        this.image = image;
-    }*/
-
 
     @Override
     public String toString()

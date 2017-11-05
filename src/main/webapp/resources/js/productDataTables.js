@@ -17,10 +17,24 @@ $(function () {
         "info": true,
         "columns": [
             {
+                "data": "baseId",
+                "visible": false,
+                "searchable": false
+            },
+            {
                 "data": "productId"
             },
             {
-                "data": "title"
+                "data": "title",
+                "render": function(data, type, row)
+                {
+                    if(type === "display")
+                    {
+                        return '<a href="products/product/' + row.baseId + '">' + data + '</a>';
+                    }
+                    return data;
+                }
+
             },
             {
                 "data": "description"
@@ -38,7 +52,7 @@ $(function () {
                 {
                     if(type === "display")
                     {
-                     return '<img src='+data+' />';
+                     return '<a href="products/product/' + row.baseId + '"><img src='+data+' />'+'</a>';
                     }
                     return data;
                 },
@@ -55,8 +69,7 @@ $(function () {
                 "render": renderDeleteBtn
             }
         ],
-        "order": []
-
+        "order": [[0, "asc"]]
     });
     makeEditable();
 });

@@ -1,5 +1,7 @@
 package ru.parser.web;
 
+import org.apache.commons.io.IOUtils;
+import org.springframework.web.bind.annotation.PathVariable;
 import ru.parser.model.Product;
 import org.apache.commons.io.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +19,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.xml.parsers.ParserConfigurationException;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.URL;
 import java.util.Objects;
 
@@ -32,80 +35,55 @@ public class ProductController
         return "index";
     }
 
-   /* @GetMapping("/products/delete")
-    public String delete(HttpServletRequest request)
+
+    @PostMapping("/productsFromFile")
+    public String parseFromFile(@RequestParam("file") MultipartFile file, Model model) throws Exception
     {
-        service.delete(getId(request));
-        return "redirect:/products";
-    }
-
-    @GetMapping("/products/update")
-    public String update(HttpServletRequest request, Model model) {
-        model.addAttribute("product", getId(request));
-        return "productForm";
-    }
-
-    @GetMapping("/products/create")
-    public String create(Model model) {
-        model.addAttribute("product", new Product());
-        return "productForm";
-    }*/
-
-    @PostMapping("/products")
-    public String parse(@RequestParam("file") MultipartFile file, @RequestParam("urlFile") URL url, Model model) throws IOException, SAXException, ParserConfigurationException
-    {
-        File convFile = null;
-
-        if(file != null)
-        {
-            convFile = new File(file.getOriginalFilename());
-            file.transferTo(convFile);
-        }
-        else if(url != null)
-        {
-            String tDir = System.getProperty("java.io.tmpdir");
-            String path = tDir + "tmp" + ".xml";
-            convFile = new File(path);
-            convFile.deleteOnExit(); FileUtils.copyURLToFile(url, convFile);
-        }
-
-        for(Product product : ProductParserUtil.parseFromXmlToProductList(convFile))
-        {
-            service.insert(product);
-        }
+        File convFile;
+        convFile = new File(file.getOriginalFilename());
+        file.transferTo(convFile);
+        parseToProductsFromFile(convFile);
         model.addAttribute("products", service.getAll());
-        convFile.delete();
+        convFile.deleteOnExit();
+        return "redirect:products";
+    }
+
+    @PostMapping("/productsFromUrl")
+    public String parseFromUrl(@RequestParam("urlFile") URL url, Model model) throws IOException, ParserConfigurationException, SAXException
+    {
+        File convFile;
+        InputStream inputStream =   url.openStream();
+        convFile = File.createTempFile("tmp", ".xml", new File(System.getProperty("user.dir")));
+        byte [] binary = IOUtils.toByteArray(inputStream);
+        FileUtils.writeByteArrayToFile(convFile, binary);
+        parseToProductsFromFile(convFile);
+        model.addAttribute("products", service.getAll());
+        convFile.deleteOnExit();
         return "redirect:products";
     }
 
     @GetMapping("/products")
-    public String getParsed(/*Model model*/)
+    public String getParsed()
     {
-        /*model.addAttribute("products", service.getAll());*/
         return "products";
     }
 
-   /* @PostMapping("/products")*/
-   /* public String updateOrCreate(HttpServletRequest request) {
-        Product product = new Product(getId(request), request.getParameter("title"),
-                request.getParameter("description"),
-                Integer.valueOf(request.getParameter("price")),
-                Integer.valueOf(request.getParameter("inetPrice")),
-                Double.valueOf(request.getParameter("rating")),
-                request.getParameter("image").getBytes());
-
-        if (product.getProductId() == null) {
-            ru.parser.service.insert(product);
-        } else {
-            ru.parser.service.update(product);
-        }
-        return "redirect:/products";
-    }*/
-
-    private int getId(HttpServletRequest request)
+    @GetMapping(value="/products/product/{baseId}")
+    public String getForPart(@PathVariable("baseId") int baseId, Model model)
     {
-        String paramId = Objects.requireNonNull(request.getParameter("id"));
-        return Integer.valueOf(paramId);
+        Product product = service.get(baseId);
+        product.setViews(product.getViews() + 1);
+        model.addAttribute("product", product);
+        return "particularProduct";
     }
+
+
+  private void parseToProductsFromFile(File file) throws IOException, SAXException, ParserConfigurationException
+  {
+      for(Product product : ProductParserUtil.parseFromXmlToProductList(file))
+      {
+          service.insert(product);
+      }
+  }
 
 }

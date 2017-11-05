@@ -40,24 +40,15 @@ public class ProductServiceImpl implements ProductService
        productRepo.delete(id);
     }
 
-    public int getViews(Product product)
+    @Override
+    public int getAllViews()
     {
-        return productRepo.getViews(product.getProductId());
-    }
-
-    public List<Product> getBad()
-    {
-        return productRepo.getBad();
-    }
-
-    public List<Product> getNormal()
-    {
-        return productRepo.getNormal();
-    }
-
-    public List<Product> getGood()
-    {
-        return productRepo.getGood();
+        int allViews = 0;
+        for(Product product : productRepo.getAll())
+        {
+            allViews += product.getViews();
+        }
+        return allViews;
     }
 
     @Override

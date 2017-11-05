@@ -1,13 +1,15 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <title>Product Parser</title>
+    <title>${product.title == null ? 'Product Parser' : product.title}</title>
     <base href="${pageContext.request.contextPath}/"/>
 
     <link rel="stylesheet" href="resources/css/style.css">
     <link rel="stylesheet" href="webjars/bootstrap/3.3.7-1/css/bootstrap.min.css">
     <link rel="stylesheet" href="webjars/datatables/1.10.15/media/css/dataTables.bootstrap.min.css">
     <link rel="stylesheet" href="webjars/noty/3.1.0/lib/noty.css"/>
+    <link rel="shortcut icon" href="http://static.mvideo.ru/assets/img/favicon.ico">
 
 
     <script type="text/javascript" src="webjars/jquery/3.2.1/dist/jquery.min.js" defer></script>

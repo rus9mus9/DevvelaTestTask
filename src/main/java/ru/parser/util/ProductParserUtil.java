@@ -69,16 +69,7 @@ public class ProductParserUtil
                         productId = Integer.valueOf(eProduct.getElementsByTagName("product_id").item(0).getChildNodes().item(0).getNodeValue());
                     }
                     price = Integer.valueOf(product.getElementsByTagName("price").item(0).getChildNodes().item(0).getNodeValue());
-
-                    if(product.getElementsByTagName("inet_price").item(0).getChildNodes().getLength() > 0)
-                    {
-                        inet_price = Integer.valueOf(product.getElementsByTagName("inet_price").item(0).getChildNodes().item(0).getNodeValue());
-                    }
-
-                    else
-                    {
-                        inet_price = price;
-                    }
+                    inet_price = Integer.valueOf(product.getElementsByTagName("inet_price").item(0).getChildNodes().item(0).getNodeValue());
                     imageURL = new URL(product.getElementsByTagName("image").item(0).getChildNodes().item(0).getNodeValue());
                     title = product.getElementsByTagName("title").item(0).getChildNodes().item(0).getNodeValue();
                     description = product.getElementsByTagName("description").item(0).getChildNodes().item(0).getNodeValue();
@@ -102,32 +93,4 @@ public class ProductParserUtil
     }
      return allProducts;
     }
-
-    /*public static byte[] downloadImFromURL(URL toDownload)
-    {
-        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-        try
-        {
-            byte [] chunk = new byte[toDownload.openConnection().getContentLength()];
-            int byteRead;
-            InputStream stream = toDownload.openStream();
-            while((byteRead = stream.read(chunk)) > 0)
-            {
-                outputStream.write(chunk, 0, byteRead);
-            }
-            stream.close();
-            return outputStream.toByteArray();
-        }
-        catch (IOException e)
-        {
-            e.printStackTrace();
-            return null;
-        }
-    }*/
-/*    public static Double round(Double value, int places)
-    {
-        BigDecimal bd = new BigDecimal(value);
-        bd = bd.setScale(places, RoundingMode.HALF_UP);
-        return bd.doubleValue();
-    }*/
 }

@@ -13,7 +13,5 @@ CREATE TABLE products
   rating NUMERIC NOT NULL,
   inetPrice INTEGER,
   imageURL VARCHAR,
-/*  image BYTEA,
-  base64Encoded VARCHAR,*/
   views INTEGER
 );
